@@ -1,0 +1,7 @@
+RV32I.cache/
+RV32I.hw/
+RV32I.sim/
+RV32I.ip_user_files/
+RV32I.gen/
+*.jou
+*.log
