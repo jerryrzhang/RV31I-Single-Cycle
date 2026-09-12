@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Extend(
+module Immediate_Extend(
     input [2:0] sel,
     input [31:7] src,
     output reg [31:0] out
