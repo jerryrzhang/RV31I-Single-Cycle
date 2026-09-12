@@ -27,7 +27,7 @@ module Program_Counter(
     );
     
     always @(posedge clk) begin
-        if (rst) out <= 0;
+        if (rst) out <= 32'b0;
         else out <= next;
     end
 endmodule
