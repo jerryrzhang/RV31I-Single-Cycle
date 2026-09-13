@@ -21,6 +21,18 @@
 
 
 module Top_Module_tb(
-
     );
+    reg clk, rst;
+    
+    
+    Top_Module dut(.clk(clk), .rst(rst));  
+
+    always #5 clk = ~clk; 
+
+    initial begin
+        clk = 0;
+        rst = 1;
+        #12 rst = 0;              
+        #200 $finish;
+    end                   
 endmodule
