@@ -28,7 +28,7 @@ module Data_Memory(
         input WEN // write enable
     );
     
-    reg [31:0] mem [63:0]; // 32 size 64 registers
+    reg [31:0] mem [63:0]; // 32 size 64 words
     
     assign RD = mem[A[7:2]]; // combinationally pull data from address
     
