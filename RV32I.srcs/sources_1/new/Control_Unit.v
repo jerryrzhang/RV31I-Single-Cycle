@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 09/12/2026 06:08:57 PM
+// Create Date: 09/13/2026 03:37:00 PM
 // Design Name: 
-// Module Name: Top_Module
+// Module Name: Control_Unit
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,37 +20,34 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Top_Module(
-        input clk, rst
+module Control_Unit(
+        input [31:0] instr,
+        input zero,
+        output PCSrc, ResultSrc, MemWrite, ALUSrc, RegWrite,
+        output [2:0] ImmSrc, ALUControl
     );
     
-    wire PCSrc, ResultSrc, MemWrite, ALUSrc, RegWrite, zero;
-    wire [2:0] ALUControl, ImmSrc;
-    wire [31:0] instr;
+    wire branch;
+    wire [1:0] ALUOp;
     
-    datapath dp (
-        .clk(clk),
-        .rst(rst),
-        .RegWrite(RegWrite),
-        .PCSrc(PCSrc),
+    Main_Decoder md (
+        .op(instr[6:0]),
         .ResultSrc(ResultSrc),
         .MemWrite(MemWrite),
-        .zero(zero),
-        .instr(instr),
         .ALUSrc(ALUSrc),
-        .ALUControl(ALUControl),
-        .ImmSrc(ImmSrc)
-    );
-    
-    Control_Unit cu (
-        .instr(instr),
-        .zero(zero),
-        .PCSrc(PCSrc),
-        .ResultSrc(ResultSrc),
-        .MemWrite(MemWrite),
         .RegWrite(RegWrite),
-        .ALUSrc(ALUSrc),
+        .Branch(branch),
         .ImmSrc(ImmSrc),
+        .ALUOp(ALUOp)
+    );
+    
+    assign PCSrc = zero & branch;
+    
+    ALU_Decoder ad (
+        .ALUOp(ALUOp),
+        .op5(instr[5]),
+        .funct3(instr[14:12]),
+        .funct7(instr[30]),
         .ALUControl(ALUControl)
     );
     

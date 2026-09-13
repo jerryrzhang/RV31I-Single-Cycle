@@ -24,7 +24,8 @@ module datapath(
         input clk, rst, 
         input RegWrite, ALUSrc, ResultSrc, MemWrite, PCSrc,
         input [2:0] ImmSrc, ALUControl,
-        output zero
+        output zero,
+        output [31:0] instr
     );
     
     wire [31:0] pc, pc_next, pc_plus4, pc_plus_imm;
@@ -35,8 +36,6 @@ module datapath(
         .out(pc),
         .next(pc_next)
     );
-    
-    wire [31:0] instr;
     
     Instruction_Memory imem (
         .address(pc),
